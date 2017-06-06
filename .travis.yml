@@ -27,6 +27,12 @@ script:
      (docker build --tag numgeom/desktop:16.04 --tag numgeom/desktop:latest . &&
       docker push numgeom/desktop &&
       touch success)'
+# Trigger build of master branch of unifem-desktop
+  - '[[ ! -f success ]] ||
+     (git clone -b master https://$GIT_USER:$GIT_TOKEN@github.com/unifem/docker-desktop.git unifem 2> /dev/null &&
+      cd unifem &&
+      git commit --allow-empty -m "Trigger compilation." &&
+      git push && cd ..)'
   - ./numgeom_desktop.py -d -n -t latest && docker stop $(docker ps -q)
   - ./numgeom_jupyter.py -d -n -t latest && docker stop $(docker ps -q)
   - docker images
