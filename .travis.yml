@@ -10,7 +10,7 @@ script:
      touch success'
 # Trigger build of dev branch of unifem-desktop
   - '[[ ! -f success ]] ||
-     (git clone -b dev https://$GIT_USER:$GIT_TOKEN@github.com/unifem/docker-desktop.git unifem 2> /dev/null &&
+     (git clone -b ci-dev https://$GIT_USER:$GIT_TOKEN@github.com/unifem/docker-desktop.git unifem 2> /dev/null &&
       cd unifem &&
       git commit --allow-empty -m "Trigger compilation." &&
       git push && cd ..)'
