@@ -10,5 +10,5 @@ if [ -e "$NUMGEOM_HOME/.git" ]; then
 else
     # Remove octave-workspace if it exists
     rm -f $NUMGEOM_HOME/octave-workspace
-    git clone git@bitbucket.org:numgeom/numgeom.git $NUMGEOM_HOME
+    git clone --depth 1 git@bitbucket.org:numgeom/numgeom.git $NUMGEOM_HOME
 fi
