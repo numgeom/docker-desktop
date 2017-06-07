@@ -11,5 +11,5 @@ else
     cd $DOCKER_HOME
     # Remove octave-workspace if it exists
     rm -f numgeom/octave-workspace
-    git clone git@bitbucket.org:numgeom/numgeom.git
+    git clone --depth 1 git@bitbucket.org:numgeom/numgeom.git
 fi
