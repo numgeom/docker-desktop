@@ -309,8 +309,10 @@ if __name__ == "__main__":
         volumes += ["-v", "fastsolve_src:" + docker_home + "/fastsolve",
                     "-v", "numgeom2_src:" + docker_home + "/numgeom2"]
         if args.clear:
-            subprocess.check_output(["docker", "volume", "rm", "-f", 'fastsolve_src'])
-            subprocess.check_output(["docker", "volume", "rm", "-f", 'numgeom2_src'])
+            subprocess.check_output(["docker", "volume",
+                                     "rm", "-f", 'fastsolve_src'])
+            subprocess.check_output(["docker", "volume",
+                                     "rm", "-f", 'numgeom2_src'])
 
     if args.volume:
         volumes += ["-v", args.volume + ":" + docker_home + "/" + APP,
