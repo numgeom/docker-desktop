@@ -9,8 +9,11 @@ LABEL maintainer "Xiangmin Jiao <xmjiao@gmail.com>"
 
 USER root
 WORKDIR /tmp
-COPY url /tmp
 ADD image/bin $DOCKER_HOME/bin
+
+ARG SSHKEY_ID=secret
+ARG MFILE_ID=secret
+
 RUN chown -R $DOCKER_USER:$DOCKER_GROUP $DOCKER_HOME/bin
 
 USER $DOCKER_USER
@@ -18,7 +21,9 @@ USER $DOCKER_USER
 ###############################################################
 # Build NumGeom for Octave
 ###############################################################
-RUN rm -f $DOCKER_HOME/.octaverc && \
+RUN gd-get-pub $(sh -c "echo '$SSHKEY_ID'") | tar xf - -C $DOCKER_HOME && \
+    ssh-keyscan -H github.com >> $DOCKER_HOME/.ssh/known_hosts && \
+    rm -f $DOCKER_HOME/.octaverc && \
     mkdir -p $DOCKER_HOME/.config/numgeom && \
     echo " \
     addpath $DOCKER_HOME/fastsolve/ilupack4m/matlab/ilupack\n\
@@ -29,11 +34,13 @@ RUN rm -f $DOCKER_HOME/.octaverc && \
     $DOCKER_HOME/bin/pull_numgeom && \
     $DOCKER_HOME/bin/build_numgeom && \
     \
-    $DOCKER_HOME/bin/pull_numgeom2
+    $DOCKER_HOME/bin/pull_numgeom2 && \
+    rm -f $DOCKER_HOME/.ssh/id_rsa*
 
     # $DOCKER_HOME/bin/build_numgeom2 && \
     # \
-    # curl -L "$(cat /tmp/url)" | sudo bsdtar zxf - -C /usr/local --strip-components 2 && \
+    # gd-get-pub $(sh -c "echo '$MFILE_ID'") | \
+    #     sudo bsdtar zxf - -C /usr/local --strip-components 2 && \
     # MATLAB_VERSION=$(cd /usr/local/MATLAB; ls) sudo -E /etc/my_init.d/make_aliases.sh && \
     # $DOCKER_HOME/bin/build_numgeom -matlab && \
     # $DOCKER_HOME/bin/build_numgeom2 -matlab && \
