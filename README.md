@@ -25,6 +25,66 @@ Download the Docker Community Edition for free at https://www.docker.com/communi
 sudo adduser $USER docker
 ```
 Then, log out and log back in before you can use Docker.
+
+## Running the Docker Image
+To run the Docker image, first download the script [`numgeom_desktop.py`](https://raw.githubusercontent.com/numgeom/docker-desktop/master/numgeom_desktop.py)
+and save it to the working directory where you will store your codes and data. You can download the script using command line: On Windows, start `Windows PowerShell`, use the `cd` command to change to the working directory where you will store your codes and data, and then run the following command:
+```
+curl https://raw.githubusercontent.com/numgeom/docker-desktop/master/numgeom_desktop.py -outfile numgeom_desktop.py
+```
+On Linux or Mac, start a terminal, use the `cd` command to change to the working directory, and then run the following command:
+```
+curl -s -O https://raw.githubusercontent.com/numgeom/docker-desktop/master/numgeom_desktop.py
+```
+
+After downloading the script, you can start the Docker image with NumGeom for Octave using the command
+```
+python numgeom_desktop.py -p
+```
+This will download and run the Docker image and then launch your default web browser to show the desktop environment. The `-p` option is optional, and it instructs the Python script to pull and update the image to the latest version.
+
+For NumGeom developers, you can start the Docker image with `MATLAB` using the command
+```
+python numgeom_desktop.py -p -m
+```
+where the `-m` option would initiate installation of MATLAB. It will prompt you to enter your Bitbucket username and password for authentication. After the desktop launches, you may be asked to activate MATLAB using your MathWorks account when you launch MATLAB.
+
+For additional command-line options, use the command
+```
+python numgeom_desktop.py -h
+```
+
+### Running the Docker Image as Jupyter-Notebook Server
+Besides using the Docker Image as an X-Windows desktop environment, you can also use it as a Jupyter-Notebook server with the
+default web browser on your computer. Simply replace `numgeom_desktop.py` with `numgeom_jupyter.py` in the preceding commands. That is, on Windows run the commands
+```
+curl https://raw.githubusercontent.com/numgeom/docker-desktop/master/numgeom_jupyter.py -outfile numgeom_jupyter.py
+python numgeom_jupyter.py -p
+```
+or on Linux and Mac run the commands
+```
+curl -s -O https://raw.githubusercontent.com/numgeom/docker-desktop/master/numgeom_jupyter.py
+python numgeom_jupyter.py -p
+```
+in the directory where your Jupyter notebooks are stored.
+
+### Running the Docker Image Offline
+After you have download the Docker image using the `curl` and `python` commands above, you can run the image offline without internet connection using the following command:
+```
+python numgeom_desktop.py
+```
+or
+```
+python numgeom_jupyter.py
+```
+in the directory where you ran the `curl` command above.
+
+### Stopping the Docker Image
+To stop the Docker image, press Ctrl-C twice in the terminal (or Windows PowerShell on Windows) on your host computer where you started the Docker image, and close the tab for the desktop in your web browser.
+
+## Entering Full-Screen Mode
+After starting the Docker image, you can change the desktop to full-screen mode. On Windows, you are recommended to use the `Microsoft Edge` browser, and you can toggle the full-screen mode by pressing Win+Shift+Enter (hold down the Windows and Shift keys, and press Enter) or by clicking on the `Fullscreen` button in the left sidebar. On Mac, we recommend either `Safari` or `Google Chrome`, for which you can toggle the full-screen mode by pressing Ctrl-Cmd-f (hold down Ctrl and Cmd keys and press f). On Linux, you are recommended to use `Firefox`, for which you can toggle the full-screen mode using the F11 (or Fn-F11) key or clicking on the `Fullscreen` button in the left sidebar. If your default browser is different from the above, you can manually copy and paste the URL into these browsers.
+
 ## Tips and Tricks
 1. By default, Docker uses two CPU cores and 2GB of memory on Mac and Windows. If you want to run large jobs, go to the `Advanced` tab in `Settings` (or `Preferences` for Mac) and increase the amount of memory dedicated to Docker.
 2. When using the Docker image, the files under `$HOME/.config`, `$HOME/.ssh`, , $HOME/numgeom`,  `$HOME/shared` and any other
