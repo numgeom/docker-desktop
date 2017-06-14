@@ -24,11 +24,6 @@ def parse_args(description):
     # Process command-line arguments
     parser = argparse.ArgumentParser(description=description)
 
-    parser.add_argument('-u', "--user",
-                        help='The username used by the image. ' +
-                        'The default is ubuntu.',
-                        default="")
-
     parser.add_argument('-i', '--image',
                         help='The Docker image to use. ' +
                         'The default is ' + APP + '/desktop.',
@@ -193,7 +188,7 @@ def download_matlab(version, user, image, volumes):
                     # Open browser if found URL
                     print('Log in with your authorized Google account in the ' +
                           'webbrowser to get verification code.')
-                    if args.no_browser:
+                    if not args.no_browser:
                         webbrowser.open(line[ind:-1])
                     else:
                         print('Open browswe at URL:')
@@ -293,15 +288,11 @@ if __name__ == "__main__":
     if not os.path.exists(homedir + "/.ssh"):
         os.mkdir(homedir + "/.ssh")
 
-    if args.user:
-        user = args.user
-        docker_home = "/home/" + args.user
-    else:
-        docker_home = subprocess.check_output(["docker", "run", "--rm",
-                                               args.image,
-                                               "echo $DOCKER_HOME"]). \
-            decode('utf-8')[:-1]
-        user = docker_home[6:]
+    docker_home = subprocess.check_output(["docker", "run", "--rm",
+                                           args.image,
+                                           "echo $DOCKER_HOME"]). \
+        decode('utf-8')[:-1]
+    user = docker_home[6:]
 
     if args.reset:
         subprocess.check_output(["docker", "volume", "rm", "-f",
