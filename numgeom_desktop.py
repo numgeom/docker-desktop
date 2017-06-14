@@ -26,7 +26,7 @@ def parse_args(description):
 
     parser.add_argument('-u', "--user",
                         help='The username used by the image. ' +
-                        ' The default is ubuntu.',
+                        'The default is ubuntu.',
                         default="")
 
     parser.add_argument('-i', '--image',
@@ -180,11 +180,9 @@ def download_matlab(version, user, image, volumes):
     if installed.find(b"installed") < 0:
         # Downloading software using Google authentication
         try:
-            port_http = find_free_port(8080, 50)
             print('Authenticating for MATLAB intallation...')
             p = subprocess.Popen(["docker", "run", "--rm", '-ti'] + volumes +
-                                 ['-p', "127.0.0.1:" + str(port_http) +
-                                     ":8080", image, "gd-auth -n"],
+                                 [image, "gd-auth -n"],
                                  stdout=subprocess.PIPE,
                                  universal_newlines=True)
 
@@ -330,10 +328,8 @@ if __name__ == "__main__":
         volumes += ["-v", "fastsolve_src:" + docker_home + "/fastsolve",
                     "-v", "numgeom2_src:" + docker_home + "/numgeom2"]
         if args.clear:
-            subprocess.check_output(["docker", "volume",
-                                     "rm", "-f", 'fastsolve_src'])
-            subprocess.check_output(["docker", "volume",
-                                     "rm", "-f", 'numgeom2_src'])
+            subprocess.check_output(["docker", "volume", "rm", "-f",
+                                     'fastsolve_src', 'numgeom2_src'])
 
     if args.volume:
         volumes += ["-v", args.volume + ":" + docker_home + "/" + APP,
