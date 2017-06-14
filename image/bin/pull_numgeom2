@@ -23,14 +23,3 @@ else
     rm -f $NUMGEOM_HOME/glp/octave-workspace
     git clone --depth 1 git@bitbucket.org:numgeom/glp.git $NUMGEOM_HOME/glp
 fi
-
-if [ -e "$NUMGEOM_HOME/mexcgns/.git" ]; then
-    echo "mexcgns was already cloned. Pulling from repository"
-
-    cd $NUMGEOM_HOME/mexcgns
-    git pull
-else
-    # Remove octave-workspace if it exists
-    rm -f $NUMGEOM_HOME/mexcgns/octave-workspace
-    git clone --depth 1 git@github.com:numgeom/mexcgns.git $NUMGEOM_HOME/mexcgns
-fi
