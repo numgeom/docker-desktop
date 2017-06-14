@@ -289,10 +289,6 @@ if __name__ == "__main__":
                                             '-q']).find(img) >= 0:
             subprocess.Popen(["docker", "rmi", "-f", img.decode('utf-8')[:-1]])
 
-    # Generate a container ID and find an unused port
-    container = id_generator()
-    port_vnc = str(find_free_port(6080, 50))
-
     # Create directory .ssh if not exist
     if not os.path.exists(homedir + "/.ssh"):
         os.mkdir(homedir + "/.ssh")
@@ -332,10 +328,11 @@ if __name__ == "__main__":
                     "-v", "matlab_config:" + docker_home + "/.matlab"]
         download_matlab(args.matlab, user, args.image, volumes)
 
-    if args.volume and args.clear:
-        subprocess.check_output(["docker", "volume", "rm", "-f", args.volume])
-
     if args.volume:
+        if args.clear:
+            subprocess.check_output(["docker", "volume",
+                                     "rm", "-f", args.volume])
+
         volumes += ["-v", args.volume + ":" + docker_home + "/" + APP,
                     "-w", docker_home + "/" + APP]
     else:
@@ -366,6 +363,9 @@ if __name__ == "__main__":
     else:
         size = args.size
 
+    # Generate a container ID
+    container = id_generator()
+
     envs = ["--hostname", container,
             "--env", "RESOLUT=" + size,
             "--env", "HOST_UID=" + uid]
@@ -373,6 +373,7 @@ if __name__ == "__main__":
         envs += ["--env", "MATLAB_VERSION=" + args.matlab]
 
     # Start the docker image in the background and pipe the stderr
+    port_vnc = str(find_free_port(6080, 50))
     subprocess.call(["docker", "run", "-d", rmflag, "--name", container,
                      "-p", "127.0.0.1:" + port_vnc + ":6080"] +
                     envs + volumes +
