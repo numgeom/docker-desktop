@@ -46,7 +46,7 @@ For NumGeom developers, you can start the Docker image with `MATLAB` using the c
 ```
 python numgeom_desktop.py -p -m
 ```
-where the `-m` option would initiate installation of MATLAB. It will prompt you to enter your Bitbucket username and password for authentication. After the desktop launches, you may be asked to activate MATLAB using your MathWorks account when you launch MATLAB.
+where the `-m` option would request installation of MATLAB. It will prompt you to authenticate using your Google account.
 
 For additional command-line options, use the command
 ```
