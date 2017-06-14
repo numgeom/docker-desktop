@@ -307,11 +307,6 @@ if __name__ == "__main__":
             decode('utf-8')[:-1]
         user = docker_home[6:]
 
-    # Create .gitconfig if not exist
-    if not os.path.isfile(homedir + "/.gitconfig"):
-        with open(homedir + "/.gitconfig") as f:
-            pass
-
     if args.reset:
         subprocess.check_output(["docker", "volume", "rm", "-f",
                                  APP + "_config"])
@@ -320,9 +315,7 @@ if __name__ == "__main__":
 
     volumes = ["-v", pwd + ":" + docker_home + "/shared",
                "-v", APP + "_config:" + docker_home + "/.config",
-               "-v", homedir + "/.ssh" + ":" + docker_home + "/.ssh",
-               "-v", homedir + "/.gitconfig" +
-               ":" + docker_home + "/.gitconfig"]
+               "-v", homedir + "/.ssh" + ":" + docker_home + "/.ssh"]
 
     if args.tag == "dev":
         volumes += ["-v", "fastsolve_src:" + docker_home + "/fastsolve",
@@ -342,6 +335,18 @@ if __name__ == "__main__":
                     "-v", "matlab_config:" + docker_home + "/.matlab"]
 
         download_matlab(args.matlab, user, args.image, volumes)
+
+    # Copy .gitconfig if exists on host and is newer than that in image
+    if os.path.isfile(homedir + "/.gitconfig"):
+        subprocess.check_output(["docker", "run", "--rm", '-t'] + volumes +
+                                ["-v", homedir + "/.gitconfig" +
+                                 ":" + docker_home + "/.gitconfig_host",
+                                 args.image,
+                                 "[[ $DOCKER_HOME/.config/git/config -nt " +
+                                 "$DOCKER_HOME/.gitconfig_host ]] || " +
+                                 "(mkdir -p $DOCKER_HOME/.config/git && " +
+                                 "cp $DOCKER_HOME/.gitconfig_host " +
+                                 "$DOCKER_HOME/.config/git/config)"])
 
     print("Starting up docker image...")
     if subprocess.check_output(["docker", "--version"]). \
