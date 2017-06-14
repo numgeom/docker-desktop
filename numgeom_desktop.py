@@ -310,31 +310,10 @@ if __name__ == "__main__":
     if args.reset:
         subprocess.check_output(["docker", "volume", "rm", "-f",
                                  APP + "_config"])
-    if args.volume and args.clear:
-        subprocess.check_output(["docker", "volume", "rm", "-f", args.volume])
 
     volumes = ["-v", pwd + ":" + docker_home + "/shared",
                "-v", APP + "_config:" + docker_home + "/.config",
                "-v", homedir + "/.ssh" + ":" + docker_home + "/.ssh"]
-
-    if args.tag == "dev":
-        volumes += ["-v", "fastsolve_src:" + docker_home + "/fastsolve",
-                    "-v", "numgeom2_src:" + docker_home + "/numgeom2"]
-        if args.clear:
-            subprocess.check_output(["docker", "volume", "rm", "-f",
-                                     'fastsolve_src', 'numgeom2_src'])
-
-    if args.volume:
-        volumes += ["-v", args.volume + ":" + docker_home + "/" + APP,
-                    "-w", docker_home + "/" + APP]
-    else:
-        volumes += ["-w", docker_home + "/shared"]
-
-    if args.matlab:
-        volumes += ["-v", "matlab_bin:/usr/local/MATLAB/",
-                    "-v", "matlab_config:" + docker_home + "/.matlab"]
-
-        download_matlab(args.matlab, user, args.image, volumes)
 
     # Copy .gitconfig if exists on host and is newer than that in image
     if os.path.isfile(homedir + "/.gitconfig"):
@@ -347,6 +326,28 @@ if __name__ == "__main__":
                                  "(mkdir -p $DOCKER_HOME/.config/git && " +
                                  "cp $DOCKER_HOME/.gitconfig_host " +
                                  "$DOCKER_HOME/.config/git/config)"])
+
+    if args.matlab:
+        volumes += ["-v", "matlab_bin:/usr/local/MATLAB/",
+                    "-v", "matlab_config:" + docker_home + "/.matlab"]
+        download_matlab(args.matlab, user, args.image, volumes)
+
+    if args.volume and args.clear:
+        subprocess.check_output(["docker", "volume", "rm", "-f", args.volume])
+
+    if args.volume:
+        volumes += ["-v", args.volume + ":" + docker_home + "/" + APP,
+                    "-w", docker_home + "/" + APP]
+    else:
+        volumes += ["-w", docker_home + "/shared"]
+
+    if args.tag == "dev":
+        volumes += ["-v", "fastsolve_src:" + docker_home + "/fastsolve"]
+        volumes += ["-v", "numgeom2_src:" + docker_home + "/numgeom2"]
+
+        if args.clear:
+            subprocess.check_output(["docker", "volume", "rm", "-f",
+                                     'fastsolve_src', 'numgeom2_src'])
 
     print("Starting up docker image...")
     if subprocess.check_output(["docker", "--version"]). \
