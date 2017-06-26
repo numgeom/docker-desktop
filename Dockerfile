@@ -9,6 +9,8 @@ LABEL maintainer "Xiangmin Jiao <xmjiao@gmail.com>"
 
 USER root
 WORKDIR /tmp
+
+ARG SSHKEY_ID=secure
 ADD image/bin $DOCKER_HOME/bin
 RUN chown -R $DOCKER_USER:$DOCKER_GROUP $DOCKER_HOME/bin
 
