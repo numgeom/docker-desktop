@@ -1,17 +1,25 @@
 os: linux
 dist: trusty
-sudo: required
 language: python
 services: docker
 
-script:
+env:
+  global:
+    - OCTAVE_VERSION=4.2.1
+    - BASE=fastsolve/desktop:latest
+
+before_script:
   - docker --version
   - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_USERPASS"
+  - docker pull $BASE
+
+script:
   # Build only if the commit range of a push is not empty and contains Dockerfile or .travis.yml
   - '[[ "$TRAVIS_EVENT_TYPE" == "push" && -n "$TRAVIS_COMMIT_RANGE" &&
+        -n $(git log --since $(docker inspect $BASE | grep Created | perl -e "s/.+\"([\d-:T]+).+$/\$1/g" -p)) &&
         -n "$(git diff --name-only $TRAVIS_COMMIT_RANGE)" &&
         -z "$(git diff --name-only $TRAVIS_COMMIT_RANGE |
-            grep -e Dockerfile -e .travis.yml)" ]] ||
+            grep -e Dockerfile -e .travis.yml -e image)" ]] ||
      (docker build --tag numgeom/desktop:latest
                    --build-arg SSHKEY_ID=$SSHKEY_ID . &&
       docker push numgeom/desktop &&
