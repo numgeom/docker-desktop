@@ -5,7 +5,6 @@ services: docker
 
 env:
   global:
-    - OCTAVE_VERSION=4.2.1
     - BASE=fastsolve/desktop:latest
 
 before_script:
