@@ -2,15 +2,26 @@ language: python
 
 services: docker
 
-env: BRANCH=dev
+env:
+  global:
+    - BRANCH=dev
+    - BASE=x11vnc/desktop:latest
+
+before_script:
+  - docker --version
+  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_USERPASS"
+  - docker pull $BASE
 
 script:
-  - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_USERPASS"
-  - 'docker build --tag numgeom/desktop:$BRANCH
+  - '[[ "$TRAVIS_EVENT_TYPE" == "push" && -n "$TRAVIS_COMMIT_RANGE" &&
+        -n $(git log --since $(docker inspect $BASE | grep Created | perl -e "s/.+\"([\d-:T]+).+$/\$1/g" -p)) &&
+        -z "$(git diff --name-only $TRAVIS_COMMIT_RANGE |
+            grep -e Dockerfile -e .travis.yml -e image)" ]] ||
+     (docker build --tag numgeom/desktop:$BRANCH
                   --build-arg SSHKEY_ID=$SSHKEY_ID
                   --build-arg MFILE_ID=$MFILE_ID . &&
-     docker push numgeom/desktop &&
-     touch success'
+      docker push numgeom/desktop:$BRANCH &&
+      touch success)'
 # Trigger build of ci-dev branch of unifem-desktop
   - '[[ ! -f success ]] ||
      (git clone -b ci-dev https://$GIT_USER:$GIT_TOKEN@github.com/unifem/docker-desktop.git unifem 2> /dev/null &&
