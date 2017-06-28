@@ -1,4 +1,4 @@
-Welcome to the Docker image for NumGeom!
+Welcome to the Docker image for the NumGeom development team!
 
 The source code for the old NumGeom is under ~/numgeom, precompiled for Octave.
 The modules for NumGeom2 are under ~/numgeom2. These gradually replace the
