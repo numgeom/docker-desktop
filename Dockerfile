@@ -21,10 +21,10 @@ USER $DOCKER_USER
 ###############################################################
 RUN rm -f $DOCKER_HOME/.octaverc && \
     mkdir -p $DOCKER_HOME/.config/numgeom && \
-    echo " \
-    run /usr/local/paracoder/load_m2c.m\n\
-    run /usr/local/ilupack4m/load_milu.m\n\
-    run /usr/local/petsc4m/load_petsc.m\n\
+    echo "\
+    run /usr/local/paracoder/startup.m\n\
+    run /usr/local/ilupack4m/startup.m\n\
+    run /usr/local/petsc4m/startup.m\n\
     " > $DOCKER_HOME/.config/numgeom/startup.m && \
     \
     gd-get-pub -o - $(sh -c "echo '$SSHKEY_ID'") | tar xf - -C $DOCKER_HOME && \
