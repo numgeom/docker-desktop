@@ -5,7 +5,7 @@ services: docker
 env:
   global:
     - BRANCH=dev
-    - BASE=x11vnc/desktop:latest
+    - BASE=fastsolve/desktop:dev
 
 before_script:
   - docker --version

@@ -10,7 +10,7 @@ if [ -e "$NUMGEOM_HOME/ahf-plus/.git" ]; then
 else
     # Remove octave-workspace if it exists
     rm -f $NUMGEOM_HOME/ahf-plus/octave-workspace
-    git clone --depth 1 git@bitbucket.org:numgeom/ahf.git $NUMGEOM_HOME/ahf-plus
+    git clone --depth 10 --no-single-branch git@bitbucket.org:numgeom/ahf.git $NUMGEOM_HOME/ahf-plus
 fi
 
 if [ -e "$NUMGEOM_HOME/glp/.git" ]; then
@@ -21,5 +21,5 @@ if [ -e "$NUMGEOM_HOME/glp/.git" ]; then
 else
     # Remove octave-workspace if it exists
     rm -f $NUMGEOM_HOME/glp/octave-workspace
-    git clone --depth 1 git@bitbucket.org:numgeom/glp.git $NUMGEOM_HOME/glp
+    git clone --depth 10 --no-single-branch git@bitbucket.org:numgeom/glp.git $NUMGEOM_HOME/glp
 fi
