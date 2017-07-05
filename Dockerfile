@@ -13,6 +13,7 @@ ADD image/home $DOCKER_HOME/
 
 ARG SSHKEY_ID=secret
 ARG MFILE_ID=secret
+ARG COMMIT=
 
 RUN chown -R $DOCKER_USER:$DOCKER_GROUP $DOCKER_HOME
 
@@ -31,7 +32,7 @@ RUN gd-get-pub -o - $(sh -c "echo '$SSHKEY_ID'") | tar xf - -C $DOCKER_HOME && \
     run $DOCKER_HOME/fastsolve/petsc4m/startup.m\n\
     " > $DOCKER_HOME/.numgeom/startup.m && \
     \
-    $DOCKER_HOME/bin/pull_numgeom && \
+    $DOCKER_HOME/bin/pull_numgeom $COMMIT && \
     $DOCKER_HOME/bin/build_numgeom && \
     \
     $DOCKER_HOME/bin/pull_numgeom2 && \

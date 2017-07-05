@@ -8,7 +8,13 @@ if [ -e "$NUMGEOM_HOME/.git" ]; then
     cd $NUMGEOM_HOME
     git pull
 else
-    # Remove octave-workspace if it exists
-    rm -f $NUMGEOM_HOME/octave-workspace
-    git clone --depth 10 --no-single-branch git@bitbucket.org:numgeom/numgeom.git $NUMGEOM_HOME
+  # Remove octave-workspace if it exists
+  rm -f $NUMGEOM_HOME/octave-workspace
+
+  git clone --depth 10 --no-single-branch git@bitbucket.org:numgeom/numgeom.git $NUMGEOM_HOME
+fi
+
+if [ -n "$1"]; then
+  cd $NUMGEOM_HOME
+  git checkout $1
 fi
