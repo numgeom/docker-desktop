@@ -25,13 +25,6 @@ USER $DOCKER_USER
 RUN gd-get-pub -o - $(sh -c "echo '$SSHKEY_ID'") | tar xf - -C $DOCKER_HOME && \
     ssh-keyscan -H github.com >> $DOCKER_HOME/.ssh/known_hosts && \
     rm -f $DOCKER_HOME/.octaverc && \
-    mkdir -p $DOCKER_HOME/.numgeom && \
-    echo "\
-    run $DOCKER_HOME/fastsolve/ilupack4m/startup.m\n\
-    run $DOCKER_HOME/fastsolve/paracoder/startup.m\n\
-    run $DOCKER_HOME/fastsolve/petsc4m/startup.m\n\
-    " > $DOCKER_HOME/.numgeom/startup.m && \
-    \
     $DOCKER_HOME/bin/pull_numgeom $COMMIT && \
     $DOCKER_HOME/bin/build_numgeom && \
     \
