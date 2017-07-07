@@ -20,13 +20,6 @@ USER $DOCKER_USER
 # Build NumGeom for Octave
 ###############################################################
 RUN rm -f $DOCKER_HOME/.octaverc && \
-    mkdir -p $DOCKER_HOME/.numgeom && \
-    echo "\
-    run /usr/local/paracoder/startup.m\n\
-    run /usr/local/ilupack4m/startup.m\n\
-    run /usr/local/petsc4m/startup.m\n\
-    " > $DOCKER_HOME/.numgeom/startup.m && \
-    \
     gd-get-pub -o - $(sh -c "echo '$SSHKEY_ID'") | tar xf - -C $DOCKER_HOME && \
     ssh-keyscan -H bitbucket.org >> $DOCKER_HOME/.ssh/known_hosts && \
     $DOCKER_HOME/bin/pull_numgeom && \
