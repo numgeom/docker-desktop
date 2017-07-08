@@ -12,7 +12,7 @@ else
     # Remove octave-workspace if it exists
     rm -f $NGHOME/octave-workspace
 
-    git clone --depth 10 --no-single-branch --branch next git@bitbucket.org:numgeom/numgeom.git $NGHOME
+    git clone --depth 10 --no-single-branch git@bitbucket.org:numgeom/numgeom.git $NGHOME
 fi
 
 cd $NGHOME
