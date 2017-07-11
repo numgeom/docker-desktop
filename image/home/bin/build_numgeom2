@@ -5,7 +5,7 @@ NUMGEOM_HOME=$DOCKER_HOME/numgeom2
 cd $NUMGEOM_HOME
 
 if [[ -z "$1" || "$1" == "-octave" ]]; then
-  octave --eval "build_numgeom"
+  (cd ahf-plus/matlab; octave --eval "build_ahf")
 else
-  octave --eval "build_numgeom -matlab"
+  (cd ahf-plus/matlab; octave --eval "build_ahf -matlab")
 fi

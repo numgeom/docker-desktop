@@ -23,3 +23,6 @@ else
     rm -f $NUMGEOM_HOME/glp/octave-workspace
     git clone --depth 10 --no-single-branch git@bitbucket.org:numgeom/glp.git $NUMGEOM_HOME/glp
 fi
+
+# Add MBeautifier
+git clone https://github.com/davidvarga/MBeautifier.git $NUMGEOM_HOME/MBeautifier
