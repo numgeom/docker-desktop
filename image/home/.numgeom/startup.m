@@ -6,5 +6,4 @@ run ~/numgeom2/ahf-plus/matlab/startup.m
 if ~exist('OCTAVE_VERSION', 'builtin')
     % Set up MBeautifier in MATLAB
     addpath('~/numgeom2/MBeautifier')
-    MBeautify.setup
 end
