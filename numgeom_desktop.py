@@ -57,7 +57,8 @@ def parse_args(description):
                         default=False)
 
     parser.add_argument('-c', '--clear',
-                        help='Clear the source tree and use the precompiled version in image.',
+                        help='Clear up the folders ~/numgeom, ~/numgeom2 and ~/fastsolve ' +
+                        'and revert them to the precompiled versions in the Docker image.',
                         action='store_true',
                         default=False)
 
