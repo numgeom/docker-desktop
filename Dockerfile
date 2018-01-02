@@ -1,5 +1,5 @@
 # Builds a Docker image for NumGeom development environment
-# with Ubuntu 16.04, Octave, Python3, Jupyter Notebook and Atom
+# with Ubuntu 17.10, Octave, Python3, Jupyter Notebook and Atom
 #
 # Authors:
 # Xiangmin Jiao <xmjiao@gmail.com>
