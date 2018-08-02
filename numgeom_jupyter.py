@@ -24,11 +24,6 @@ def parse_args(description):
     # Process command-line arguments
     parser = argparse.ArgumentParser(description=description)
 
-    parser.add_argument('-u', "--user",
-                        help='The username used by the image. ' +
-                        ' The default is to retrieve from image.',
-                        default="")
-
     parser.add_argument('-i', '--image',
                         help='The Docker image to use. ' +
                         'The default is ' + APP + '/desktop.',
@@ -151,6 +146,7 @@ if __name__ == "__main__":
     import os
     import webbrowser
     import platform
+    import re
 
     args = parse_args(description=__doc__)
 
@@ -271,13 +267,13 @@ if __name__ == "__main__":
 
                 # Monitor the stdout to extract the URL
                 for stdout_line in iter(p.stdout.readline, ""):
-                    ind = stdout_line.find("http://0.0.0.0:")
+                    m = re.search('http://[^:]+:', stdout_line)
 
-                    if ind >= 0:
+                    if m:
                         # Open browser if found URL
                         if not args.notebook:
                             url = "http://localhost:" + \
-                                stdout_line[ind + 15:-1]
+                                stdout_line[m.end():-1]
                         else:
                             url = "http://localhost:" + port_http + \
                                 "/notebooks/" + args.notebook + \
