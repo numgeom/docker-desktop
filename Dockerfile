@@ -22,7 +22,7 @@ USER $DOCKER_USER
 RUN rm -f $DOCKER_HOME/.octaverc && \
     gd-get-pub -o - $(sh -c "echo '$SSHKEY_ID'") | tar xf - -C $DOCKER_HOME && \
     ssh-keyscan -H bitbucket.org >> $DOCKER_HOME/.ssh/known_hosts && \
-    $DOCKER_HOME/bin/pull_numgeom && \
+    $DOCKER_HOME/bin/pull_numgeom rebecca_testing && \
     $DOCKER_HOME/bin/pull_numgeom2 && \
     $DOCKER_HOME/bin/build_numgeom && \
     $DOCKER_HOME/bin/build_numgeom2 && \
