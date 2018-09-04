@@ -192,8 +192,8 @@ if __name__ == "__main__":
     import glob
 
     args = parse_args(description=__doc__)
+    config = proj + '_' + args.tag + '_config'
 
-    config = proj + '_' + tag + '_config'
     if args.quiet:
         def print(*args, **kwargs):
             "Do nothing"
