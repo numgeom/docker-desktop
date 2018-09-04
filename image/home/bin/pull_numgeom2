@@ -25,4 +25,4 @@ else
 fi
 
 # Add MBeautifier
-git clone https://github.com/davidvarga/MBeautifier.git $NUMGEOM_HOME/MBeautifier
+git clone https://github.com/numgeom/MBeautifier.git $NUMGEOM_HOME/MBeautifier

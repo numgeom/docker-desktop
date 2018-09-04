@@ -1,17 +1,27 @@
 #!/bin/bash
 
-cd $DOCKER_HOME
+# Usage:
+# pull_numgeom [branch] [commit]
+# The default branch is master. The default commit is head
 
-BRANCH=${1:-master}
+NGHOME=$DOCKER_HOME/numgeom
 
-if [ -e "numgeom/.git" ]; then
+if [ -e "$NGHOME/.git" ]
+then
     echo "NumGeom was already cloned. Pulling from repository"
 
-    cd $DOCKER_HOME/numgeom
+    cd $NGHOME
     git pull
 else
-    cd $DOCKER_HOME
+    BRANCH=${1:-master}
     # Remove octave-workspace if it exists
-    rm -f numgeom/octave-workspace
-    git clone --depth 10 -b $BRANCH git@bitbucket.org:numgeom/numgeom.git
+    rm -f $NGHOME/octave-workspace
+
+    git clone --depth 10 --no-single-branch --branch $BRANCH git@bitbucket.org:numgeom/numgeom.git $NGHOME
+fi
+
+cd $NGHOME
+if [[ -n "$2" && "$(git log --pretty=oneline --abbrev-commit --abbrev=7 -n 1)" != "$1"* ]]
+then
+    git checkout $2
 fi
