@@ -1,6 +1,6 @@
 #!/bin/bash
 
-NUMGEOM_HOME=$DOCKER_HOME/projects/numgeom2
+NUMGEOM_HOME=$DOCKER_HOME/project/numgeom2
 mkdir -p $NUMGEOM_HOME
 
 if [ -e "$NUMGEOM_HOME/ahf-plus/.git" ]; then
