@@ -1,16 +1,16 @@
 #!/bin/bash
 
-cd $DOCKER_HOME
+mkdir -p $DOCKER_HOME/project
+cd $DOCKER_HOME/project
 
 BRANCH=${1:-master}
 
 if [ -e "numgeom/.git" ]; then
     echo "NumGeom was already cloned. Pulling from repository"
 
-    cd $DOCKER_HOME/numgeom
+    cd numgeom
     git pull
 else
-    cd $DOCKER_HOME
     # Remove octave-workspace if it exists
     rm -f numgeom/octave-workspace
     git clone --depth 10 -b $BRANCH git@bitbucket.org:numgeom/numgeom.git

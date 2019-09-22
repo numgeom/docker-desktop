@@ -30,5 +30,5 @@ RUN rm -f $DOCKER_HOME/.octaverc && \
     rm -f $DOCKER_HOME/.ssh/id_rsa*
 
 
-WORKDIR $DOCKER_HOME/numgeom
+WORKDIR $DOCKER_HOME/project
 USER root
