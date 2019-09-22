@@ -16,7 +16,8 @@ then
 else
     BRANCH=${1:-master}
 
-    git clone --depth 10 --no-single-branch --branch $BRANCH git@bitbucket.org:numgeom/pynumgeom.git $PYNGHOME
+    git clone --depth 10 --no-single-branch --branch $BRANCH --recurse-submodules \
+        git@bitbucket.org:numgeom/pynumgeom.git $PYNGHOME
 fi
 
 cd $PYNGHOME
