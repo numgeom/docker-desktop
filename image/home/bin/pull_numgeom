@@ -4,7 +4,8 @@
 # pull_numgeom [branch] [commit]
 # The default branch is master. The default commit is head
 
-NGHOME=$DOCKER_HOME/numgeom
+NGHOME=$DOCKER_HOME/projects/numgeom
+mkdir -p $NGHOME
 
 if [ -e "$NGHOME/.git" ]
 then
