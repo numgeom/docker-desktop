@@ -102,8 +102,7 @@ RUN add-apt-repository ppa:lyx-devel/release && \
         cpplint && \
     mv /etc/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xml_old
 
-RUN chown -R $DOCKER_USER:$DOCKER_GROUP \
-    $DOCKER_HOME/.numgeom $DOCKER_HOME/bin $DOCKER_HOME/WELCOME
+RUN chown -R $DOCKER_USER:$DOCKER_GROUP $DOCKER_HOME/bin $DOCKER_HOME/WELCOME
 
 USER $DOCKER_USER
 RUN mkdir -p ~/.lyx && \
