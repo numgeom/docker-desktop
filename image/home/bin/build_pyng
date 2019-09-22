@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd $DOCKER_HOME/PyNumGeom
+
+./setup.sh --inplace

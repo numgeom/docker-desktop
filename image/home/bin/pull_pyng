@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Usage:
+# pull_pyng [branch] [commit]
+# The default branch is master. The default commit is head
+
+PYNGHOME=$DOCKER_HOME/PyNumGeom
+
+if [ -e "$PYNGHOME/.git" ]
+then
+    echo "PyNumGeom was already cloned. Pulling from repository"
+
+    cd $PYNGHOME
+    git pull
+else
+    BRANCH=${1:-master}
+
+    git clone --depth 10 --no-single-branch --branch $BRANCH git@bitbucket.org:numgeom/pynumgeom.git $PYNGHOME
+fi
+
+cd $PYNGHOME
+if [[ -n "$2" && "$(git log --pretty=oneline --abbrev-commit --abbrev=7 -n 1)" != "$1"* ]]
+then
+    git checkout $2
+fi

@@ -1,20 +1,13 @@
-Welcome to the Docker image for the NumGeom development team!
+Welcome to the Docker image for NumGeom desktop environment!
 
-The source code for the old NumGeom is under ~/numgeom, precompiled for Octave
-and MATLAB. The modules for PyNumGeom are under ~/PyNumGeom, which will 
-gradually replace the implementations in ~/numgeom.
+This image is based on Ubuntu 18.04, with LyX 2.3, Visual Studio Code,
+Octave 4.2.2, SciPy and Spyder for Python 3.6, Jupyter Notebook for Python 
+and Octave, g++-7.3, LAPACK, ddd, valgrind, and various editors preinstalled.
 
-Iterative solvers based on PETSc and ILUPACK are under ~/fastsolve, precompiled
-for MATLAB and Octave. These solvers are directly accessible in NumGeom as
-functions gmresMILU, gmresHypre, etc.
+Please save your code and data into the ~/shared or ~/project directories.
+The former maps to the current work directory on your computer. The latter
+maps to the Docker data volume named lyx_project on your host.
 
-Please save your code and data in ~/shared, which maps to the current work
-directory on your host computer. You can also save them under ~/numgeom,
-~/numgeom2, ~/fastsolve, or ~/PyNumGeom, which are preserved unless you
-restart the Docker container using numgeom-desktop.py with the "-c" option.
-
-To use git with ssh authentication, make sure the ssh key on your host computer
-has been added to bitbucket and github, and then run "ssh-add" in a terminal
-within the Docker desktop to add your ssh key to the ssh-agent.
-
-Happy coding!
+To use git with ssh authentication, make sure the ssh key on your host 
+computer is in bitbucket and github, and then run "ssh-add" in a terminal 
+to add your ssh key to the ssh-agent.
