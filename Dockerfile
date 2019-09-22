@@ -141,5 +141,5 @@ RUN gd-get-pub -o - $(sh -c "echo '$SSHKEY_ID'") | tar xf - -C $DOCKER_HOME && \
     \
     rm -f $DOCKER_HOME/.ssh/id_rsa*
 
-WORKDIR $DOCKER_HOME/numgeom
+WORKDIR $DOCKER_HOME/project
 USER root
