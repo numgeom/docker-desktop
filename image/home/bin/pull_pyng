@@ -5,6 +5,7 @@
 # The default branch is master. The default commit is head
 
 PYNGHOME=$DOCKER_HOME/projects/PyNumGeom
+mkdir -p $PYNGHOME
 
 if [ -e "$PYNGHOME/.git" ]
 then
