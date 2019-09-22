@@ -4,7 +4,7 @@
 # pull_pyng [branch] [commit]
 # The default branch is master. The default commit is head
 
-PYNGHOME=$DOCKER_HOME/PyNumGeom
+PYNGHOME=$DOCKER_HOME/projects/PyNumGeom
 
 if [ -e "$PYNGHOME/.git" ]
 then

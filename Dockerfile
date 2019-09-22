@@ -4,7 +4,7 @@
 # Authors:
 # Xiangmin Jiao <xmjiao@gmail.com>
 
-FROM fastsolve/desktop:dev
+FROM fastsolve/desktop:dev-env
 LABEL maintainer "Xiangmin Jiao <xmjiao@gmail.com>"
 
 USER root
@@ -106,8 +106,7 @@ RUN chown -R $DOCKER_USER:$DOCKER_GROUP \
     $DOCKER_HOME/.numgeom $DOCKER_HOME/bin $DOCKER_HOME/WELCOME
 
 USER $DOCKER_USER
-RUN echo '@lyx' >> $DOCKER_HOME/.config/lxsession/LXDE/autostart && \
-    mkdir -p ~/.lyx && \
+RUN mkdir -p ~/.lyx && \
     ln -s -f $DOCKER_HOME/.config/LyX/preferences ~/.lyx && \
     code --install-extension mine.cpplint
 
@@ -119,25 +118,15 @@ ARG COMMIT=
 USER $DOCKER_USER
 
 #############################
-# Build NumGeom and PyNumGeom
+# Build PyNumGeom
 #############################
 RUN gd-get-pub -o - $(sh -c "echo '$SSHKEY_ID'") | tar xf - -C $DOCKER_HOME && \
     ssh-keyscan -H github.com >> $DOCKER_HOME/.ssh/known_hosts && \
-    rm -f $DOCKER_HOME/.octaverc && \
-    $DOCKER_HOME/bin/pull_numgeom $BRANCH $COMMIT && \
-    $DOCKER_HOME/bin/pull_numgeom2 && \
     $DOCKER_HOME/bin/pull_pyng && \
-    $DOCKER_HOME/bin/build_numgeom && \
-    $DOCKER_HOME/bin/build_numgeom2 && \
     $DOCKER_HOME/bin/build_pyng && \
     \
     gd-get-pub -o - $(sh -c "echo '$MFILE_ID'") | \
         sudo bsdtar zxf - -C /usr/local --strip-components 2 && \
-    MATLAB_VERSION=$(cd /usr/local/MATLAB; ls) sudo -E /etc/my_init.d/make_aliases.sh && \
-    \
-    $DOCKER_HOME/bin/build_numgeom -matlab && \
-    $DOCKER_HOME/bin/build_numgeom2 -matlab && \
-    sudo rm -rf /usr/local/MATLAB/R* && \
     \
     rm -f $DOCKER_HOME/.ssh/id_rsa*
 
