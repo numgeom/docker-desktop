@@ -10,6 +10,8 @@ LABEL maintainer "Xiangmin Jiao <xmjiao@gmail.com>"
 USER root
 WORKDIR /tmp
 
+ARG SSHKEY_ID=secret
+
 COPY image/config $DOCKER_HOME/.config
 COPY image/bin /usr/local/bin
 COPY image/share /usr/share
@@ -57,7 +59,7 @@ RUN add-apt-repository ppa:lyx-devel/release && \
         ispell \
         evince \
         xpdf \
-	at-spi2-core \
+	    at-spi2-core \
         psutils \
         pstoedit \
         ps2eps \
@@ -102,17 +104,16 @@ RUN add-apt-repository ppa:lyx-devel/release && \
         cpplint && \
     mv /etc/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xml_old
 
-RUN chown -R $DOCKER_USER:$DOCKER_GROUP $DOCKER_HOME/bin $DOCKER_HOME/WELCOME
+RUN chown -R $DOCKER_USER:$DOCKER_GROUP $DOCKER_HOME/bin $DOCKER_HOME/WELCOME && \
+    git clone --depth 1 https://github.com/hpdata/gdutil /usr/local/gdutil && \
+    pip2 install -r /usr/local/gdutil/requirements.txt && \
+    pip3 install -r /usr/local/gdutil/requirements.txt && \
+    ln -s -f /usr/local/gdutil/bin/* /usr/local/bin
 
 USER $DOCKER_USER
 RUN mkdir -p ~/.lyx && \
     ln -s -f $DOCKER_HOME/.config/LyX/preferences ~/.lyx && \
     code --install-extension mine.cpplint
-
-ARG SSHKEY_ID=secret
-ARG MFILE_ID=secret
-ARG BRANCH=
-ARG COMMIT=
 
 USER $DOCKER_USER
 
