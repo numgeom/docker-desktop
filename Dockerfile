@@ -121,7 +121,7 @@ USER $DOCKER_USER
 # Build PyNumGeom
 #############################
 RUN gd-get-pub -o - $(sh -c "echo '$SSHKEY_ID'") | tar xf - -C $DOCKER_HOME && \
-    ssh-keyscan -H github.com >> $DOCKER_HOME/.ssh/known_hosts && \
+    ssh-keyscan -H bitbucket.org >> $DOCKER_HOME/.ssh/known_hosts && \
     $DOCKER_HOME/bin/pull_pyng && \
     $DOCKER_HOME/bin/build_pyng && \
     rm -f $DOCKER_HOME/.ssh/id_rsa*

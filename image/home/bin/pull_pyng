@@ -2,13 +2,12 @@
 
 # Usage:
 # pull_pyng [branch] [commit]
-# The default branch is master. The default commit is head
+# The default branch is master. The default commit is HEAD
 
 PYNGHOME=$DOCKER_HOME/project/PyNumGeom
 mkdir -p $PYNGHOME
 
-if [ -e "$PYNGHOME/.git" ]
-then
+if [ -e "$PYNGHOME/.git" ]; then
     echo "PyNumGeom was already cloned. Pulling from repository"
 
     cd $PYNGHOME
@@ -16,12 +15,12 @@ then
 else
     BRANCH=${1:-master}
 
+    # Checkout modules using readonly ssh-key, which must be added to all the submodules
     git clone --depth 10 --no-single-branch --branch $BRANCH --recurse-submodules \
         git@bitbucket.org:numgeom/pynumgeom.git $PYNGHOME
 fi
 
 cd $PYNGHOME
-if [[ -n "$2" && "$(git log --pretty=oneline --abbrev-commit --abbrev=7 -n 1)" != "$1"* ]]
-then
+if [[ -n "$2" && "$(git log --pretty=oneline --abbrev-commit --abbrev=7 -n 1)" != "$1"* ]]; then
     git checkout $2
 fi
