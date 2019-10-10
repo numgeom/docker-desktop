@@ -2,4 +2,4 @@
 
 cd $DOCKER_HOME/project/PyNumGeom
 
-./setup.sh --inplace
+./setup.sh --in-place

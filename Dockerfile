@@ -87,6 +87,9 @@ RUN add-apt-repository ppa:lyx-devel/release && \
     pip3 install \
         numpy \
         scipy \
+        sympy \
+        matplotlib \
+        pandas \
         numba \
         numpydoc \
         setuptools \
