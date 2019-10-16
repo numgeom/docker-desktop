@@ -87,24 +87,9 @@ RUN add-apt-repository ppa:lyx-devel/release && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     chown -R $DOCKER_USER:$DOCKER_USER $DOCKER_HOME && \
     pip3 install \
-        numpy \
-        scipy \
-        sympy \
-        matplotlib \
-        pandas \
-        numba \
-        numpydoc \
-        setuptools \
         python-igraph \
         networkx \
-        meshio \
-        Cython \
-        mpi4py \
-        pytest \
-        Sphinx \
-        sphinx_rtd_theme \
-        pylint \
-        cpplint && \
+        meshio && \
     mv /etc/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xml_old
 
 RUN chown -R $DOCKER_USER:$DOCKER_GROUP $DOCKER_HOME/bin $DOCKER_HOME/WELCOME && \
@@ -115,8 +100,7 @@ RUN chown -R $DOCKER_USER:$DOCKER_GROUP $DOCKER_HOME/bin $DOCKER_HOME/WELCOME &&
 
 USER $DOCKER_USER
 RUN mkdir -p ~/.lyx && \
-    ln -s -f $DOCKER_HOME/.config/LyX/preferences ~/.lyx && \
-    code --install-extension mine.cpplint
+    ln -s -f $DOCKER_HOME/.config/LyX/preferences
 
 USER $DOCKER_USER
 
