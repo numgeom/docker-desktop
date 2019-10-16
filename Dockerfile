@@ -87,7 +87,7 @@ RUN add-apt-repository ppa:lyx-devel/release && \
     pip3 install \
         python-igraph \
         networkx \
-        meshio &&
+        meshio && \
     mv /etc/ImageMagick-6/policy.xml /etc/ImageMagick-6/policy.xml_old
 
 RUN chown -R $DOCKER_USER:$DOCKER_GROUP \
