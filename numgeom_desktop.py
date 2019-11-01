@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 """
 Launch a Docker image with Ubuntu and LXDE window manager, and
 automatically open up the URL in the default web browser.
@@ -370,14 +369,16 @@ if __name__ == "__main__":
     if args.matlab:
         volumes += ["-v", "matlab_bin:/usr/local/MATLAB/"]
 
-    vols = [args.volume]
     if args.tag != "pyng":
         volumes += [
-            "-v", "numgeom_src:" + docker_home + "/numgeom", "-v",
+            "-v", args.volume + ":" + docker_home + "/" + projdir, "-v",
             "numgeom2_src:" + docker_home + "/numgeom2", "-v",
             "fastsolve_src:" + docker_home + "/fastsolve"
         ]
-        vols += ["numgeom_src", "numgeom2_src", "fastsolve_src"]
+        vols = [args.volume, "numgeom2_src", "fastsolve_src"]
+    else:
+        volumes += ["-v", args.volume + ":" + docker_home + "/" + projdir]
+        vols = [args.volume]
 
     if args.volume:
         if args.clear:
@@ -389,8 +390,6 @@ if __name__ == "__main__":
                     ["docker", "volume", "rm", "-f", vols])
             except subprocess.CalledProcessError as e:
                 stderr_write(e.output.decode("utf-8"))
-
-        volumes += ["-v", args.volume + ":" + docker_home + "/" + projdir]
 
     if args.workdir[0] == "/":
         volumes += ["-w", args.workdir]
