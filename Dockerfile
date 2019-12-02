@@ -99,8 +99,7 @@ RUN chown -R $DOCKER_USER:$DOCKER_GROUP $DOCKER_HOME/bin $DOCKER_HOME/WELCOME &&
     ln -s -f /usr/local/gdutil/bin/* /usr/local/bin
 
 USER $DOCKER_USER
-RUN mkdir -p ~/.lyx && \
-    ln -s -f $DOCKER_HOME/.config/LyX/preferences
+RUN ln -s -f $DOCKER_HOME/.config/LyX ~/.lyx
 
 USER $DOCKER_USER
 
