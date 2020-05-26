@@ -119,7 +119,6 @@ RUN gd-get-pub -o - $(sh -c "echo '$SSHKEY_ID'") | tar xf - -C $DOCKER_HOME && \
     \
     gd-get-pub -o - $(sh -c "echo '$MFILE_ID'") | \
         sudo bsdtar zxf - -C /usr/local --strip-components 2 && \
-    MATLAB_VERSION=$(cd /usr/local/MATLAB; ls) sudo -E /etc/my_init.d/make_aliases.sh && \
     \
     $DOCKER_HOME/bin/build_numgeom -matlab && \
     $DOCKER_HOME/bin/build_numgeom2 -matlab && \
