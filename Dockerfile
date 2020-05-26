@@ -1,5 +1,5 @@
 # Builds a Docker image for NumGeom development environment
-# with Ubuntu 17.10, Octave, Python3, Jupyter Notebook and Atom
+# with Ubuntu, Octave, Python3, Jupyter Notebook and VS Code
 #
 # Authors:
 # Xiangmin Jiao <xmjiao@gmail.com>
@@ -25,7 +25,7 @@ USER $DOCKER_USER
 # Build NumGeom for Octave
 ###############################################################
 RUN gd-get-pub -o - $(sh -c "echo '$SSHKEY_ID'") | tar xf - -C $DOCKER_HOME && \
-    ssh-keyscan -H github.com >> $DOCKER_HOME/.ssh/known_hosts && \
+    ssh-keyscan -H bitbucket.org >> $DOCKER_HOME/.ssh/known_hosts && \
     rm -f $DOCKER_HOME/.octaverc && \
     $DOCKER_HOME/bin/pull_numgeom $BRANCH $COMMIT && \
     $DOCKER_HOME/bin/pull_numgeom2 && \
@@ -34,7 +34,6 @@ RUN gd-get-pub -o - $(sh -c "echo '$SSHKEY_ID'") | tar xf - -C $DOCKER_HOME && \
     \
     gd-get-pub -o - $(sh -c "echo '$MFILE_ID'") | \
         sudo bsdtar zxf - -C /usr/local --strip-components 2 && \
-    MATLAB_VERSION=$(cd /usr/local/MATLAB; ls) sudo -E /etc/my_init.d/make_aliases.sh && \
     \
     $DOCKER_HOME/bin/build_numgeom -matlab && \
     $DOCKER_HOME/bin/build_numgeom2 -matlab && \
